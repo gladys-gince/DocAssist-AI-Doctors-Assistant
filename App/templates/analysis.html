@@ -1,0 +1,672 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - DocAssist</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }} ">
+</head>
+<body>
+    <h1>Home</h1>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/css/style.css') }}"
+    />
+    <!-- Boxicons CSS -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      select {
+        width: 250px;
+        height: 30px;
+        font-size: 1rem;
+      }
+
+      form > div {
+        margin-top: 15px;
+      }
+
+      input[type="date"] {
+        height: 30px;
+        width: 150px;
+        font-size: 1rem;
+      }
+
+      table {
+        margin-top: 30px;
+      }
+
+      th,
+      td {
+        text-align: center;
+        height: 30px;
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 100px;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 160px;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 250px;
+      }
+
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 130px;
+      }
+
+      #profile_photo {
+        border-radius: 50%;
+        width: 60px;
+        height: 50px;
+        position: absolute;
+        bottom: -15px;
+        right: -70px;
+      }
+
+      .doctors_photo {
+        height: 150px;
+        width: 180px;
+        border-radius: 50%;
+      }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+
+  <body id="home-body">
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">DocAssist</span>
+      </div>
+      <div id="profile" style="position: absolute; right: 120px; top: 22px">
+        <label>{{username}}</label>
+        <img
+          id="profile_photo"
+          src="data:image/jpeg;base64,{{ profile_photo }}"
+          alt="Profile Photo"
+        />
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">DocAssist</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="/" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Home</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Add Doctor</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="/doctorList" class="nav-link">
+                <i class="bx bx-message-rounded icon"></i>
+                <span class="link">Doctor's List</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-message-rounded icon"></i>
+                <span class="link">Patient's List</span>
+              </a>
+            </li>
+            <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+          </ul>
+
+          <div class="bottom-cotent">
+            <li class="list">
+              <a href="/logout" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="overlay"></section>
+
+    <main style="margin: 70px 0; display: flex; flex-direction: column">
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          margin-top: 30px;
+        "
+      >
+        <div id="trending_doctor" style="text-align: center; width: 400px">
+          <h2>Trending Doctors :</h2>
+          <select id="dropdown1">
+            <option value="overall_doctor">Overall</option>
+            <option value="30days_doctor">Last 30 days</option>
+            <option value="90days_doctor">Last 90 days</option>
+            <option value="180days_doctor">Last 6 Months</option>
+            <option value="365days_doctor">Last 1 Year</option>
+          </select>
+          <button onclick="sendData1()">Submit</button>
+          <div id="container1" style="height: 400px; width: 400px"></div>
+        </div>
+        <div id="trending_diseases" style="text-align: center; width: 400px">
+          <h2>Trending Diseases :</h2>
+          <select id="dropdown2">
+            <option value="overall_disease">Overall</option>
+            <option value="30days_disease">Last 30 days</option>
+            <option value="90days_disease">Last 90 days</option>
+            <option value="180days_disease">Last 6 Months</option>
+            <option value="365days_disease">Last 1 Year</option>
+          </select>
+          <button onclick="sendData2()">Submit</button>
+          <div id="container2" style="height: 400px; width: 400px"></div>
+        </div>
+      </div>
+      <div
+        style="
+          margin-top: 50px;
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+        "
+      >
+        <div id="age_disease" style="text-align: center; width: 400px">
+          <h2>Trending Diseases :</h2>
+          <div id="container3" style="height: 400px; width: 400px"></div>
+        </div>
+        <div id="age_symptoms" style="text-align: center; width: 400px">
+          <h2>Viral Symptoms :</h2>
+          <div id="container4" style="height: 400px; width: 400px"></div>
+        </div>
+      </div>
+      <!-- <div id="chart-box" style="margin: 100px auto;">
+            <img src="{{ url_for('static', filename='/assets/chart.jpg') }}" alt="">
+        </div> -->
+    </main>
+
+    <!-- <script src="{{ url_for('static', filename='/js/script.js') }}"></script> -->
+  </body>
+  <script>
+    function sendData1() {
+      var selectedOption = document.getElementById("dropdown1").value;
+      fetch("/analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedOption: selectedOption }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          show_pie_data("container1", data["data"], "");
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    }
+    function sendData2() {
+      var selectedOption = document.getElementById("dropdown2").value;
+      fetch("/analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedOption: selectedOption }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          show_pie_data("container2", data["data"], "");
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    }
+
+    function show_pie_data(container, data, heading) {
+      /* const doctorCounts = data.reduce((acc, [appointmentId, doctorName]) => {
+        acc[doctorName] = (acc[doctorName] || 0) + 1;
+        return acc;
+      }, {}); */
+
+      const doctorCounts = data.reduce((acc, [appointmentId, doctorName]) => {
+        if (doctorName !== "") {
+          acc[doctorName] = (acc[doctorName] || 0) + 1;
+        }
+        return acc;
+      }, {});
+
+      // Convert the object into an array of objects suitable for Highcharts
+      const chartData = Object.entries(doctorCounts).map(([name, y]) => ({
+        name,
+        y,
+      }));
+
+      Highcharts.chart(container, {
+        chart: {
+          type: "pie",
+          backgroundColor: "transparent",
+        },
+        title: {
+          text: heading,
+        },
+        tooltip: {
+          pointFormat: "{series.name}: <b>{point.y}</b>",
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: "pointer",
+            dataLabels: {
+              enabled: true,
+              format: "<b>{point.name}</b>: {point.y}",
+            },
+          },
+        },
+        series: [
+          {
+            name: "Number of Patients",
+            data: chartData,
+          },
+        ],
+      });
+    }
+
+    function show_scatter1(data) {
+      const groupedData = data.reduce((acc, [age, disease]) => {
+        if (age !== "0" && disease.trim() !== "") {
+          if (!acc[age]) {
+            acc[age] = [];
+          }
+          acc[age].push(disease.trim());
+        }
+        return acc;
+      }, {});
+
+      // Generate random colors for each unique disease category
+      const diseaseColors = {};
+      const getRandomColor = () =>
+        "#" + Math.floor(Math.random() * 16777215).toString(16); // Random color generator
+
+      Object.values(groupedData)
+        .flat()
+        .forEach((disease) => {
+          if (!diseaseColors[disease]) {
+            diseaseColors[disease] = getRandomColor();
+          }
+        });
+
+      // Transform the grouped data into an array of objects for Highcharts
+      const chartData = Object.entries(groupedData).flatMap(
+        ([age, diseases]) => {
+          // Generate data points for each disease category
+          return Object.entries(
+            diseases.reduce((acc, disease) => {
+              acc[disease] = (acc[disease] || 0) + 1;
+              return acc;
+            }, {})
+          ).map(([disease, count]) => ({
+            x: parseInt(age), // Convert age to integer
+            y: count, // Count of diseases
+            name: disease, // Disease category
+            color: diseaseColors[disease] || "gray", // Use specified color or gray as fallback
+          }));
+        }
+      );
+
+      // Display the chart
+      Highcharts.chart("container3", {
+        chart: {
+          type: "scatter",
+        },
+        title: {
+          text: "Age vs. Disease Count",
+        },
+        xAxis: {
+          title: {
+            text: "Age",
+          },
+        },
+        yAxis: {
+          title: {
+            text: "Disease Count",
+          },
+        },
+        plotOptions: {
+          scatter: {
+            marker: {
+              radius: 5,
+              symbol: "circle",
+            },
+          },
+        },
+        legend: {
+          title: {
+            text: "Disease Categories",
+          },
+          align: "center",
+          layout: "horizontal",
+          verticalAlign: "bottom",
+          itemMarginTop: 10,
+          itemMarginBottom: 10,
+          itemStyle: {
+            fontSize: "12px",
+          },
+          symbolWidth: 15,
+        },
+        series: Object.entries(diseaseColors).map(([disease, color]) => ({
+          name: disease,
+          data: chartData.filter((data) => data.name === disease),
+          color: color,
+        })),
+      });
+    }
+
+/*     function show_scatter2(data) {
+      console.log(data);
+
+      // Function to convert string representation of array to an actual array
+const parseSymptomsString = (symptomsString) => {
+    // Remove the leading and trailing single quotes
+    const trimmedString = symptomsString.replace(/^'|'$/g, '');
+    // Split the string by comma and trim each element
+    return trimmedString.split(',').map(symptom => symptom.trim());
+};
+
+// Preprocess the data to convert string representation of symptoms to actual arrays
+const preprocessedData = data.map(([age, symptomsString]) => {
+    return [age, parseSymptomsString(symptomsString)];
+});
+
+// Now 'preprocessedData' contains the data with symptoms converted to arrays
+console.log(preprocessedData);
+
+      const groupedData = preprocessedData.reduce((acc, [age, disease]) => {
+        if (age !== "0" && disease.trim() !== "") {
+          if (!acc[age]) {
+            acc[age] = [];
+          }
+          acc[age].push(disease.trim());
+        }
+        return acc;
+      }, {});
+
+      // Generate random colors for each unique disease category
+      const diseaseColors = {};
+      const getRandomColor = () =>
+        "#" + Math.floor(Math.random() * 16777215).toString(16); // Random color generator
+
+      Object.values(groupedData)
+        .flat()
+        .forEach((disease) => {
+          if (!diseaseColors[disease]) {
+            diseaseColors[disease] = getRandomColor();
+          }
+        });
+
+      // Transform the grouped data into an array of objects for Highcharts
+      const chartData = Object.entries(groupedData).flatMap(
+        ([age, diseases]) => {
+          // Generate data points for each disease category
+          return Object.entries(
+            diseases.reduce((acc, disease) => {
+              acc[disease] = (acc[disease] || 0) + 1;
+              return acc;
+            }, {})
+          ).map(([disease, count]) => ({
+            x: parseInt(age), // Convert age to integer
+            y: count, // Count of diseases
+            name: disease, // Disease category
+            color: diseaseColors[disease] || "gray", // Use specified color or gray as fallback
+          }));
+        }
+      );
+
+      // Display the chart
+      Highcharts.chart("container4", {
+        chart: {
+          type: "scatter",
+        },
+        title: {
+          text: "Age vs. Disease Count",
+        },
+        xAxis: {
+          title: {
+            text: "Age",
+          },
+        },
+        yAxis: {
+          title: {
+            text: "Disease Count",
+          },
+        },
+        plotOptions: {
+          scatter: {
+            marker: {
+              radius: 5,
+              symbol: "circle",
+            },
+          },
+        },
+        legend: {
+          title: {
+            text: "Disease Categories",
+          },
+          align: "center",
+          layout: "horizontal",
+          verticalAlign: "bottom",
+          itemMarginTop: 10,
+          itemMarginBottom: 10,
+          itemStyle: {
+            fontSize: "12px",
+          },
+          symbolWidth: 15,
+        },
+        series: Object.entries(diseaseColors).map(([disease, color]) => ({
+          name: disease,
+          data: chartData.filter((data) => data.name === disease),
+          color: color,
+        })),
+      });
+    }
+ */
+    
+ function show_scatter2(data) {
+    console.log(data);
+
+    // Function to parse symptoms string into an array of symptoms
+    const parseSymptomsString = (symptomsString) => {
+        // Remove leading and trailing brackets, single quotes, and split by comma
+        return symptomsString.replace(/^\[|\]$/g, '').split(",").map(symptom => symptom.replace(/^'|'$/g, '').trim());
+    };
+
+    // Preprocess the data to convert string representation of symptoms to actual arrays
+    const preprocessedData = data.map(([age, symptomsArray]) => {
+        return [age, parseSymptomsString(symptomsArray)];
+    });
+
+    console.log(preprocessedData);
+
+    // Group the data by age and diseases
+    const groupedData = preprocessedData.reduce((acc, [age, diseases]) => {
+        if (age !== "0" && diseases.length > 0) {
+            if (!acc[age]) {
+                acc[age] = [];
+            }
+            // Push each disease separately
+            diseases.forEach(disease => {
+                acc[age].push(disease);
+            });
+        }
+        return acc;
+    }, {});
+
+    // Generate random colors for each unique disease category
+    const diseaseColors = {};
+    const getRandomColor = () => "#" + Math.floor(Math.random() * 16777215).toString(16); // Random color generator
+
+    Object.values(groupedData).flat().forEach((disease) => {
+        if (!diseaseColors[disease]) {
+            diseaseColors[disease] = getRandomColor();
+        }
+    });
+
+    // Transform the grouped data into an array of objects for Highcharts
+    const chartData = Object.entries(groupedData).flatMap(([age, diseases]) => {
+        // Generate data points for each disease category
+        return Object.entries(diseases.reduce((acc, disease) => {
+            acc[disease] = (acc[disease] || 0) + 1;
+            return acc;
+        }, {})).map(([disease, count]) => ({
+            x: parseInt(age), // Convert age to integer
+            y: count, // Count of diseases
+            name: disease, // Disease category
+            color: diseaseColors[disease] || "gray", // Use specified color or gray as fallback
+        }));
+    });
+
+    // Display the chart
+    Highcharts.chart("container4", {
+        chart: {
+            type: "scatter",
+        },
+        title: {
+            text: "Age vs. Disease Count",
+        },
+        xAxis: {
+            title: {
+                text: "Age",
+            },
+        },
+        yAxis: {
+            title: {
+                text: "Disease Count",
+            },
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    symbol: "circle",
+                },
+            },
+        },
+        legend: {
+            title: {
+                text: "Disease Categories",
+            },
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            itemMarginTop: 10,
+            itemMarginBottom: 10,
+            itemStyle: {
+                fontSize: "12px",
+            },
+            symbolWidth: 15,
+        },
+        series: Object.entries(diseaseColors).map(([disease, color]) => ({
+            name: disease,
+            data: chartData.filter((data) => data.name === disease),
+            color: color,
+        })),
+    });
+}
+
+ 
+ window.onload = function () {
+      // Code to execute when the page loads
+      fetch("/analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          selectedOption: [
+            "overall_doctor",
+            "overall_disease",
+            "age_vs_disease",
+            "age_vs_symptoms",
+          ],
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          show_pie_data("container1", data[1], "");
+          show_pie_data("container2", data[2], "");
+          show_scatter1(data[3]);
+          show_scatter2(data[4]);
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    };
+  </script>
+</html>

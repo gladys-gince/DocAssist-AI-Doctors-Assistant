@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demographics - DocAssist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        form {
+            /* width: 65vw; */
+            display: flex;
+            flex-direction: column;
+            background: #14164d;
+            padding: 40px 50px;
+        }
+
+        #left_demographics_box {
+            display: flex;
+            flex-direction: column;
+            width: 55%;
+        }
+
+        #left_demographics_box_1,
+        #left_demographics_box_2,
+        #left_demographics_box_3 {
+            display: flex;
+            gap: 3rem;
+            margin-top: 20px;
+        }
+
+        label {
+            color: white;
+            display: block;
+            font-size: 1.2rem;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            height: 30px;
+            width: 300px;
+            outline: none;
+            padding-left: 3px;
+            font-size: 1rem;
+        }
+
+        input[type="file"] {
+            height: 30px;
+            width: 180px;
+            color: white;
+            margin-top: 4px;
+        }
+
+        input[type="date"] {
+            height: 30px;
+            font-size: 1rem;
+            width: 140px;
+        }
+
+        button[type="submit"] {
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            padding: 7px 15px;
+            font-size: 1.2rem;
+            background: #7FC7D9;
+            border: none;
+            border-radius: 5px;
+            color: #DCF2F1;
+        }
+
+        select {
+            height: 30px;
+            width: 120px;
+        }
+
+        #left_demographics_box_4 {
+            margin-top: 20px;
+        }
+
+        textarea {
+            font-size: 1rem;
+            outline: none;
+            padding-left: 3px;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Demographics {{data}}</h1>
+    <form action="/demographics" method="post" enctype="multipart/form-data">
+		<input type="text" name="user_id" value="{{data}}" style="display: none;">
+		<input type="text" name="email" value="{{email}}" style="display: none;">
+		<input type="text" name="password" value="{{password}}" style="display: none;">
+        <div id="left_demographics_box">
+            <div id="left_demographics_box_1">
+                <div id="name">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" class="user_name">
+                </div>
+                <div id="gender">
+                    <label for="gender">Gender</label>
+                    <select name="gender" id="user_gender">
+                        <option value=""></option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div id="left_demographics_box_2">
+                <div id="contact">
+                    <label for="contact">Contact</label>
+                    <input type="tel" name="contact" id="user_contact">
+                </div>
+                <div id="bg">
+                    <label for="bg">Blood Group</label>
+                    <select name="blood_group" id="user_bg">
+                        <option value=""></option>
+                        <option value="A+">A+</option>
+                        <option value="B+">B+</option>
+                        <option value="AB+">AB+</option>
+                        <option value="O+">O+</option>
+                        <option value="A-">A-</option>
+                        <option value="B-">B-</option>
+                        <option value="C-">C-</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+            </div>
+            <div id="left_demographics_box_3">
+                <div id="dob">
+                    <label for="dob">DOB</label>
+                    <input type="date" name="dob" id="user_dob">
+                </div>
+                <div id="profile_photo">
+                    <label for="profile_photo">Upload Profile Photo</label>
+                    <input type="file" accept=".png, .jpeg, .jpg" id="user_pp" name="photo">
+                </div>
+            </div>
+            <div id="left_demographics_box_4">
+                <label for="address">Address</label>
+                <textarea name="address" id="address" cols="50" rows="3"></textarea>
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

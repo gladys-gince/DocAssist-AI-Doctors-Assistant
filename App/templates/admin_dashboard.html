@@ -1,0 +1,251 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - DocAssist</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }} ">
+</head>
+<body>
+    <h1>Home</h1>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+
+    <style>
+        select {
+            width: 250px;
+            height: 30px;
+            font-size: 1rem;
+        }
+
+        form>div {
+            margin-top: 15px;
+        }
+
+        input[type="date"] {
+            height: 30px;
+            width: 150px;
+            font-size: 1rem;
+        }
+
+        table {
+            margin-top: 30px;
+        }
+
+        th,
+        td {
+            text-align: center;
+            height: 30px;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 100px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 160px;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 250px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 130px;
+        }
+
+        #profile_photo {
+            border-radius: 50%;
+            width: 60px;
+            height: 50px;
+            position: absolute;
+            bottom: -15px;
+            right: -70px;
+        }
+
+        .doctors_photo {
+            height: 150px;
+            width: 180px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+
+<body id="home-body">
+    <nav>
+        <div class="logo">
+            <i class="bx bx-menu menu-icon"></i>
+            <span class="logo-name">DocAssist</span>
+        </div>
+        <div id="profile" style="position: absolute;right: 120px;top: 22px;">
+            <label>{{username}}</label>
+            <img id="profile_photo" src="data:image/jpeg;base64,{{ profile_photo }}" alt="Profile Photo">
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <i class="bx bx-menu menu-icon"></i>
+                <span class="logo-name">DocAssist</span>
+            </div>
+            <div class="sidebar-content">
+                <ul class="lists">
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="link">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="link">Add Doctor</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/doctorList" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Doctor's List</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Patient's List</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/analysis" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Disease Analysis</span>
+                        </a>
+                    </li>
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+                </ul>
+
+                <div class="bottom-cotent">
+                    <li class="list">
+                        <a href="/logout" class="nav-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="link">Logout</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="overlay"></section>
+
+    <main style="display: flex;">
+        <div>
+            <div id="available_docter">
+                <h2>Available Doctors Today : </h2>
+                {% if doctor_details is not none %}
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Specialist</th>
+                            <th>Doctor Name</th>
+                            <th>Timing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in doctor_details %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ row[0] }} </td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <h3 style="text-align: center;opacity: .3;margin-top: 30px;">~ No Appointments ~</h3>
+                {% endif %}
+            </div>
+            <div id="todays_appointment">
+                <h2>Todays Appointments :</h2>
+                <div style="display: flex;gap: 8rem;justify-content: center;align-items: center;margin-top: 50px;">
+                    <div id="pending_appointments">
+                        <h2 style="text-align: center;font-size: 3rem;">{{pending_count}}</h2>
+                        <h4>Pending Appointments</h4>
+                    </div>
+                    <div id="completed_appointments">
+                        <h2 style="text-align: center;font-size: 3rem;">{{completed_count}}</h2>
+                        <h4>Completed Appointments</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="total_details">
+                <div>
+                    <h1 style="font-size: 5rem;">{{doctor_count}}</h1>
+                    <h5>Total No of Docotors</h5>
+                    <a href="/doctorList">Details</a>
+                </div>
+                <div>
+                    <h1 style="font-size: 5rem;">{{patient_count}}</h1>
+                    <h5>Total No of Patients</h5>
+                    <a href="/patientList">Details</a>
+                </div>
+                <div>
+                    <h1 style="font-size: 5rem;">{{appointment_count }}</h1>
+                    <h5 style="margin-bottom: 17px;">Total No of Appointments Completed</h5>
+                    <br>
+                </div>
+            </div>
+            <div id="top_performing">
+                <h2>Top Performing Doctors :</h2>
+                <div style="display: flex;gap: 2rem;">
+                    {% for row in top_performer %}
+                    <div style="text-align: center;margin-top: 15px;">
+                        <img class="doctors_photo" src="data:image/jpeg;base64,{{row[2]}}" alt="Profile Photo">
+                        <h4>{{row[0]}}</h4>
+                        <h5>Completed Appointments : {{row[1]}}</h5>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+</body>
+
+</html>

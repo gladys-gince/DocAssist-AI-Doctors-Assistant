@@ -1,0 +1,132 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - DocAssist</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }} ">
+</head>
+<body>
+    <h1>Home</h1>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+
+    <style>
+
+        #profile_photo{
+            border-radius: 50%;
+            width: 60px;
+            height: 50px;
+            position: absolute;
+            bottom: -15px;
+            right: -70px;
+        }
+
+    </style>
+</head>
+
+<body id="home-body">
+    <nav>
+        <div class="logo">
+            <i class="bx bx-menu menu-icon"></i>
+            <span class="logo-name">DocAssist</span>
+        </div>
+        <div id="profile" style="position: absolute;right: 120px;top: 22px;">
+            <label>{{data[1]}}</label>
+            <img id="profile_photo" src="data:image/jpeg;base64,{{ data[6] }}" alt="Profile Photo">
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <i class="bx bx-menu menu-icon"></i>
+                <span class="logo-name">DocAssist</span>
+            </div>
+            <div class="sidebar-content">
+                <ul class="lists">
+                    <li class="list">
+                        <a href="/" class="nav-link">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="link">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="link">Last Appointments</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/profile" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Profile</span>
+                        </a>
+                    </li>
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+                </ul>
+
+                <div class="bottom-cotent">
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-cog icon"></i>
+                <span class="link">Settings</span>
+              </a>
+            </li> -->
+                    <li class="list">
+                        <a href="/logout" class="nav-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="link">Logout</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="overlay"></section>
+
+    <main style="display: flex;justify-content: center;align-items: center;gap: 2rem;">
+        <div id="front_card">
+            <h1>DocAssist</h1>
+            <img id="id_img" src="data:image/jpeg;base64,{{ data[6] }}" alt="Profile Photo">
+            <span id="id_name">Name : {{data[1]}}</span> <br>
+            <span id="id_contact">Contact No : {{data[3]}}</span>
+        </div>
+        <div id="back_card">
+            <span id="id_gender">Gender : {{data[2]}}</span> <br>
+            <span id="id_bg">Blood Group : {{data[4]}}</span> <br>
+            <span id="id_dob">DOB : {{data[5]}}</span><br>
+            <span id="id_address">Address : {{data[7]}}</span><br>  
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+</body>
+</html>

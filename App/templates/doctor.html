@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <style>
+        th,
+        td {
+            text-align: center;
+            height: 45px;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 60px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 160px;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 230px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 130px;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 110px;
+        }
+
+        #profile_photo {
+            border-radius: 50%;
+            width: 60px;
+            height: 50px;
+            position: absolute;
+            bottom: -15px;
+            right: -70px;
+        }
+
+        .detail_button {
+            padding: 7px 15px;
+            border-radius: 7px;
+            background: #0F1035;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        label{
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #A9A9A9;
+        }
+
+    </style>
+</head>
+
+<body id="home-body">
+    <nav>
+        <div class="logo">
+            <i class="bx bx-menu menu-icon"></i>
+            <span class="logo-name">DocAssist</span>
+        </div>
+        <!-- <div id="profile" style="position: absolute;right: 120px;top: 22px;">
+            <label>{{username}}</label>
+            <img id="profile_photo" src="data:image/jpeg;base64,{{ profile_photo }}" alt="Profile Photo">
+        </div> -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="bx bx-menu menu-icon"></i>
+                <span class="logo-name">DocAssist</span>
+            </div>
+            <div class="sidebar-content">
+                <ul class="lists">
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="link">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="link">Add Doctor</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/doctorList" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Doctor's List</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Patient's List</span>
+                        </a>
+                    </li>
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+                </ul>
+
+                <div class="bottom-cotent">
+                    <li class="list">
+                        <a href="/logout" class="nav-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="link">Logout</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="overlay"></section>
+
+    <main>
+        <h1 style="margin-top: 110px;text-align: center;">Doctors List</h1>
+        <div id="previous_appointments"
+            style="display: flex;justify-content: center;align-items: center;margin-top: 30px;margin-bottom: 50px;">
+            {% if doctorDetails is not none %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Specialist</th>
+                        <th>Docotor Name</th>
+                        <th>Timing</th>
+                        <th>Available Day</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in doctorDetails %}
+                    <tr>
+                        <td>{{ row[0] }} </td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        <!-- <div id="appoinment_details">
+            <div id="close_btn" onclick="hide_details()">X</div>
+            <div id="left_details">
+                <div id="id_appoinment">
+                    <label>Appointment ID : </label> <br>
+                    <span id="id_appoint"></span>
+                </div>
+                <div id="dn_appoinment">
+                    <label>Doctor Name : </label> <br>
+                    <span id="dn_appoint"></span>
+                </div>
+                <div id="time_appoinment">
+                    <label>Time : </label><br>
+                    <span id="time_appoint"></span>
+                </div>
+                <div id="pres_medicine_appoinment">
+                    <label>Prescribed Medicine : </label><br>
+                    <span id="medicine_appoint"></span>
+                </div>
+            </div>
+            <div id="right_details">
+                <div id="symptoms_appoinment">
+                    <label>Detected Symptoms : </label><br>
+                    <span id="symptoms_appoint"></span>
+                </div>
+                <div id="disease_appoinment">
+                    <label>Detected Disease : </label><br>
+                    <span id="disease_appoint"></span>
+                </div>
+                <div id="surgery_appoinment">
+                    <label>Detected Surgery : </label><br>
+                    <span id="surgery_appoint"></span>
+                </div>
+                <div id="tests_appoinment">
+                    <label>Detected Tests : </label><br>
+                    <span id="tests_appoint"></span>
+                </div>
+            </div>
+        </div> -->
+    </main>
+
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+</body>
+<!-- <script>
+
+    var id_appoint = document.getElementById('id_appoint');
+    var dn_appoint = document.getElementById('dn_appoint');
+    var time_appoint = document.getElementById('time_appoint');
+    var medicine_appoint = document.getElementById('medicine_appoint');
+    var symptoms_appoint = document.getElementById('symptoms_appoint');
+    var disease_appoint = document.getElementById('disease_appoint');
+    var surgery_appoint = document.getElementById('surgery_appoint');
+    var tests_appoint = document.getElementById('tests_appoint');
+    
+    var appoinment_details = document.getElementById('appoinment_details');
+
+    data = {{doctorDetails | tojson | safe}}
+    // console.log(data);
+
+    function show_appointment_details(details){
+        console.log(details);
+        id_appoint.innerHTML = details[0]
+        dn_appoint.innerHTML = details[1]
+        time_appoint.innerHTML = details[2].slice(11, 19) + ' ' + details[2].slice(8, 10) + details[2].slice(4, 7)+'-'+details[2].slice(0,4);
+        medicine_appoint.innerHTML = details[3]
+        symptoms_appoint.innerHTML = details[4].replace('[','').replace(']','').replace(/'/g, "")
+        disease_appoint.innerHTML = details[5]
+        surgery_appoint.innerHTML = details[6]
+        tests_appoint.innerHTML = details[7].replace('[','').replace(']','').replace(/'/g, "")
+    }
+
+    var detail_button = document.getElementsByClassName("detail_button");
+    for (var i = 0; i < detail_button.length; i++) {
+        detail_button[i].addEventListener('click', (e) => {
+            var target = event.target;
+            toggleDetails()
+            var rowData = $(target)
+                .closest("tr")
+                .find("td")
+                .map(function () {
+                    return $(this).text();
+                })
+                .get();
+            console.log(rowData[1]);
+            for (const element of data) {
+                if(element[0] == rowData[1].trim()){
+                    console.log(element);
+                    show_appointment_details(element)
+                    break;
+                }   
+            }
+        })
+    }
+
+    function hide_details() {
+  var overlay = document.getElementsByClassName("overlay")[0];
+  overlay.style.display = "none";
+  appoinment_details.style.display = "none";
+}
+
+function toggleDetails() {
+  var overlay = document.getElementsByClassName("overlay")[0];
+
+  if (overlay.style.display === "block") {
+    overlay.style.display = "none";
+    appoinment_details.style.display = "none";
+  } else {
+    overlay.style.display = "block";
+    appoinment_details.style.display = "flex";
+  }
+}
+
+</script> -->
+
+</html>

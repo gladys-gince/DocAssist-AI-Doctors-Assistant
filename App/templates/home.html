@@ -1,0 +1,295 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - DocAssist</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }} ">
+</head>
+<body>
+    <h1>Home</h1>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+
+    <style>
+        select {
+            width: 250px;
+            height: 30px;
+            font-size: 1rem;
+        }
+
+        form>div {
+            margin-top: 15px;               
+        }
+
+        input[type="date"] {
+            height: 30px;
+            width: 150px;
+            font-size: 1rem;
+        }
+
+        table{
+            margin-top: 30px;
+        }
+
+        th,td{
+            text-align: center;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1){
+            width: 100px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2){
+            width: 160px;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3){
+            width: 200px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4){
+            width: 130px;
+        }
+
+        #profile_photo{
+            border-radius: 50%;
+            width: 60px;
+            height: 50px;
+            position: absolute;
+            bottom: -15px;
+            right: -70px;
+        }
+
+    </style>
+</head>
+
+<body id="home-body">
+    <nav>
+        <div class="logo">
+            <i class="bx bx-menu menu-icon"></i>
+            <span class="logo-name">DocAssist</span>
+        </div>
+        <div id="profile" style="position: absolute;right: 120px;top: 22px;">
+            <label>{{user_name}}</label>
+            <img id="profile_photo" src="data:image/jpeg;base64,{{ profile_photo }}" alt="Profile Photo">
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <i class="bx bx-menu menu-icon"></i>
+                <span class="logo-name">DocAssist</span>
+            </div>
+            <div class="sidebar-content">
+                <ul class="lists">
+                    <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="link">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="last_appointments" class="nav-link">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="link">Last Appointments</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/profile" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Profile</span>
+                        </a>
+                    </li>
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+                </ul>
+
+                <div class="bottom-cotent">
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-cog icon"></i>
+                <span class="link">Settings</span>
+              </a>
+            </li> -->
+                    <li class="list">
+                        <a href="/logout" class="nav-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="link">Logout</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="overlay"></section>
+
+    <main>
+        <h1 style="margin-top: 110px;text-align: center;">Appointments</h1>
+        <div id="appointments">
+            {% if appointments is not none %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Doctor Type</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in appointments %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <h3 style="text-align: center;opacity: .3;margin-top: 30px;">~ No Appointments ~</h3>
+            {% endif %}
+        </div>
+        <button id="book_appointments" onclick="toggleModal()">Book Appointment</button>
+
+        <div id="appointment_form">
+            <button id="hide-btn" onclick="hide_form()">X</button>
+            <form id="appointmentForm" action="#">
+                <div id="appointment-docter-type">
+                    <label for="docter-type">Doctor Type : </label> <br>
+                    <select name="docter-type" id="docter-type">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div id="notice"></div>
+                <div id="appointment-docter-name">
+                    <label for="docter-name">Doctor Name : </label> <br>
+                    <select name="docter-name" id="docter-name">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div id="appointment-docter-name">
+                    <label for="patient-name">Date : </label> <br>
+                    <input type="date" name="appointment-date" id="appointment-date" />
+                </div>
+                <button id="book_button" type="button" onclick="submitForm()">Book</button>
+            </form>
+        </div>
+        <div id="confirmation-msg">
+            <p style="display: inline-block;vertical-align: middle;"> Your Appointment is Booked Successfully <img
+                    src="{{ url_for('static', filename='/assets/party.png') }}" alt="party"
+                    style="height: 30px;width: 30px;vertical-align: middle;margin-left: 5px;position: relative;bottom: 3px;">
+            </p>
+        </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+</body>
+<script>
+    // var idx = []
+    var val = ''
+    var time_idx = 0
+    var nday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    var rday = [0, 1, 2, 3, 4, 5, 6]
+    var day_no = 0
+    document.getElementById("appointment-date").valueAsDate = new Date();
+    const dtype = document.getElementById("docter-type");
+    const dname = document.getElementById("docter-name");
+    const date = document.getElementById("appointment-date");
+    let type = {{ specialist | safe}}
+    let namee = {{ doctor_name | safe}}
+    let timing = {{ doctor_time | safe}}
+    let day = {{ doctor_day | safe}}
+    new_type = [... new Set(type)]
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('appointment-date').min = today;
+
+
+    for (let i = 0; i < new_type.length; i++) {
+        let option = document.createElement("option");
+        option.value = new_type[i];
+        option.innerHTML = new_type[i];
+        dtype.appendChild(option)
+    }
+
+    dtype.addEventListener("change", () => {
+        val = dtype.value //A
+        idx = []
+        for (let i = 0; i < type.length; i++) {
+            if (type[i] == val) {
+                idx.push(i)
+            }
+        }
+        for (var i = dname.options.length - 1; i > 0; i--) {
+            dname.remove(i);
+        }
+        for (const j of idx) {
+            let option = document.createElement("option");
+            option.value = namee[j];
+            option.innerHTML = namee[j];
+            dname.appendChild(option)
+        }
+    });
+    dname.addEventListener('change', () => {
+        n = dname.value
+        for (let i = 0; i < type.length; i++) {
+            if (namee[i] == n && type[i] == val) {
+                time_idx = i;
+                break
+            }
+        }
+        document.getElementById('notice').innerHTML = '*Doctor is Available from ' + timing[time_idx] + ' on ' + day[time_idx];
+        day_no = nday.indexOf(day[time_idx])
+    })
+    date.addEventListener('input', (e) => {
+        val = date.value
+        var day = new Date(val).getUTCDay();
+        rday.splice(day_no, 1)
+        if (rday.includes(day)) {
+            e.preventDefault();
+            this.value = '';
+            alert('Doctor is only Available on ' + nday[day_no]);
+            location.reload();
+        }
+    });
+</script>
+
+</html>

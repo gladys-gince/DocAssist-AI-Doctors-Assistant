@@ -1,0 +1,8 @@
+Flask
+psycopg2
+Flask-CORS
+pytz
+spacy
+
+
+transcription = """Hello, Doctor. My name is Gladys. I am 21 years old and female. I've been experiencing persistent cough , high fever , and fatigue for the past few days. I got my influenza vaccine a couple of months ago. Hello, Gladys. Based on your symptoms and recent influenza vaccination, it is likely that you have Hypertension . Do you have any underlying health conditions ? Are you currently taking any medications? I recently had a bypass surgery. I am regularly taking CTZ Tablet. Last time you had prescribed Allegra M Tablet . I would prescribe to take Shotmax spray every morning and keep an eye on your symptoms. Additionally, I recommend a nasal swab test to confirm the Hypertension diagnosis and to check for any secondary infections. If there's any worsening, contact our office immediately. Thank you, Doctor. I'll follow your advice and get the nasal swab test done as soon as possible and buy the prescribed medication."""

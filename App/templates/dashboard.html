@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - DocAssist</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Recorder.js -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.min.js" integrity="sha512-Dc8aBUPSsnAiEtyqTYZrldxDfs2FnS8cU7BVHIJ1m5atjKrtQCoPRIn3gsVbKm2qY8NwjpTVTnawoC4XBvEZiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.js"
+        integrity="sha512-zSq4Vvm00k8M01OLF/SmwKryVpA7YVXIbEFHU1rvNw3pgH50SjL6O4nDbB65V76YKWmr3rPABOXJ+uz+Z3BEmw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        table {
+            margin-top: 30px;
+        }
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 100px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 160px;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 130px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 300px;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 150px;
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 150px;
+        }
+
+
+        th {
+            height: 30px;
+        }
+
+        td {
+            height: 50px;
+        }
+
+        .start_button,
+        .resume-btn,
+        .stop-btn,
+        .pause-btn,
+        .done-btn {
+            padding: 7px 15px;
+            font-size: 1rem;
+            background-color: #0F1035;
+            border: none;
+            border-radius: 7px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .resume-btn {
+            background-color: #7FC7D9;
+        }
+
+        .stop-btn {
+            background-color: rgb(199, 47, 47);
+        }
+
+        .pause-btn {
+            background-color: green;
+        }
+
+        .done-btn {
+            background-color: gray;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #patient_profile {
+            background: #fff;
+            width: 350px;
+            border-radius: 7px;
+            padding: 15px 25px;
+            /* display: block; */
+            display: none;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        label {
+            font-size: 1.2rem;
+            color: green;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body id="home-body">
+    <nav>
+        <div class="logo">
+            <i class="bx bx-menu menu-icon"></i>
+            <span class="logo-name">DocAssist</span>
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <i class="bx bx-menu menu-icon"></i>
+                <span class="logo-name">DocAssist</span>
+            </div>
+
+            <div class="sidebar-content">
+                <ul class="lists">
+                    <li class="list">
+                        <a href="/" class="nav-link">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="link">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="/last_appointments" class="nav-link">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="link">Last Appointments</span>
+                        </a>
+                    </li>
+                    <!-- <li class="list">
+                        <a href="#" class="nav-link">
+                            <i class="bx bx-message-rounded icon"></i>
+                            <span class="link">Family Members</span>
+                        </a>
+                    </li> -->
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-pie-chart-alt-2 icon"></i>
+                <span class="link">Analytics</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-heart icon"></i>
+                <span class="link">Likes</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-folder-open icon"></i>
+                <span class="link">Files</span>
+              </a>
+            </li> -->
+                </ul>
+
+                <div class="bottom-cotent">
+                    <!-- <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-cog icon"></i>
+                <span class="link">Settings</span>
+              </a>
+            </li> -->
+                    <li class="list">
+                        <a href="/logout" class="nav-link">
+                            <i class="bx bx-log-out icon"></i>
+                            <span class="link">Logout</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="overlay"></section>
+    <main>
+        <h1 style="margin-top: 110px;text-align: center;">Appointments</h1>
+        <div id="appointments">
+            {% if data is not none and data|length > 0 %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Appointment ID</th>
+                        <th>Patient ID</th>
+                        <th>Patient Name</th>
+                        <th></th>
+                        <!-- <th></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td><Button class="start_button">Start</Button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <h3 style="text-align: center;opacity: .3;margin-top: 30px;">~ No Appointments Today ~</h3>
+            {% endif %}
+        </div>
+        <div id="patient_profile">
+            <div style="display: flex; gap:2rem">
+                {% for row in data %}
+                <div id="show_left">
+                    <div id="namee_patient">
+                        <label for="">Name : </label>
+                        <p class="show_data">{{row[2]}}</p>
+                    </div>
+                    <div id="gender_patient">
+                        <label for="">Gender : </label>
+                        <p class="show_data">{{row[3]}}</p>
+                    </div>
+                </div>
+                <div id="right_left">
+                    <div id="bg_patient">
+                        <label for="">Blood Group : </label>
+                        <p class="show_data">{{row[5]}}</p>
+                    </div>
+                    <div id="age_patient">
+                        <label for="">Age : </label>
+                        <p class="show_data">{{row[6]}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+<script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+
+</html>
